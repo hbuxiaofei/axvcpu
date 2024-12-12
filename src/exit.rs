@@ -143,6 +143,28 @@ pub enum AxVCpuExitReason {
         /// The data to be written.
         data: u64,
     },
+    /// The instruction executed by the vcpu performs a continuous I/O read operation (string I/O read).
+    IoReadString {
+        /// The port number of the I/O read.
+        port: Port,
+        /// The physical address in guest memory where the read data will be stored.
+        addr: GuestPhysAddr,
+        /// The width of the I/O read.
+        width: AccessWidth,
+        /// The total number of bytes to be read from the I/O port.
+        length: usize,
+    },
+    /// The instruction executed by the vcpu performs a continuous I/O write operation (string I/O write).
+    IoWriteString {
+        /// The port number of the I/O write.
+        port: Port,
+        /// The physical address in guest memory where the data to be written resides.
+        addr: GuestPhysAddr,
+        /// The width of the I/O write.
+        width: AccessWidth,
+        /// The total number of bytes to be written to the I/O port.
+        length: usize,
+    },
     /// An external interrupt happened.
     ///
     /// Note that fields may be added in the future, use `..` to handle them.
